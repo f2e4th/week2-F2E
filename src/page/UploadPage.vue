@@ -69,7 +69,27 @@ $main_color:#BE8E55;
   }
 }
 .Upload_progress {
+  margin: 60px 0;
   fill: $main_color;
+  .progress_content__item {
+    @apply relative;
+    &:nth-last-child(1){
+      &::before {
+        display: none;
+      }
+    }
+    &::before {
+      @apply absolute;
+      top: 29px;
+      left: 60px;
+      display: block;
+      content: '';
+      height: 2px;
+      width: 95px;
+      background-color: $main_color;
+    }
+    
+  }
   .progress_content {
     @apply flex flex-nowrap items-center justify-between items-center;
     &__item {
