@@ -11,7 +11,9 @@
     </div>
     <div class="Upload_content_wrapper">
       <div class="Upload_content">
-        
+        <div class="file"> <img src="../assets/img/icon_upload_n.png"> 選擇檔案</div>
+        <div class="text">或直接拖放檔案進來</div>
+        <div class="text">檔案限制格式：pdf,大小200mb以下</div>
       </div>
     </div>
   </div>
@@ -45,16 +47,31 @@ $main_color:#BE8E55;
   width: 600px;
   height: 600px;
   .Upload_content {
-    @apply border rounded-md border-dashed;
+    @apply border rounded-md border-dashed flex flex-col items-center justify-center;
     border-color: $main_color;
     width: 536px;
     height: 536px;
+    color: $main_color;
+    .file {
+      @apply border rounded px-2 py-1 flex flex-nowrap items-center;
+      border-color: $main_color;
+      margin-bottom: 8px;
+      >img {
+        margin-right: 4px;
+      }
+    }
+    .file,.text{
+      margin-bottom: 8px;
+      font-weight: 700px;
+      font-size: 16px;
+      line-height: 23px;
+    }
   }
 }
 .Upload_progress {
   fill: $main_color;
   .progress_content {
-    @apply flex flex-nowrap items-center justify-between;
+    @apply flex flex-nowrap items-center justify-between items-center;
     &__item {
       margin: 0 47.5px;
       &__line {
