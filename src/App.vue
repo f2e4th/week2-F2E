@@ -1,15 +1,15 @@
 <template>
   <div>
-    <home-page/>
+   <SignPage/>
   </div>
 </template>
 
 <script>
-import homePage from './page/homePage.vue'
+import SignPage  from './page/SignPage.vue';
 
 export default {
   components:{
-    homePage
+    SignPage
   }
  
 }
