@@ -9,18 +9,26 @@
         </li>
       </ul>
     </div>
-    <div class="Upload_content_wrapper">
+    <div v-if="uploadMode" class="Upload_content_wrapper">
       <div class="Upload_content">
-        
       </div>
+    </div>
+    <div v-else class="Upload_pdf">
+      <pdfview/>
     </div>
   </div>
 </template>
 <script>
-import {ref, reactive} from 'vue';
+import {ref, reactive, onMounted} from 'vue';
 import finish from '../assets/img/finish.svg';
 import sign from '../assets/img/sign.svg';
 import upload from '../assets/img/upload.png';
+import pdfview from '../components/pdfview.vue';
+export default {
+  components: {
+    pdfview
+  }
+}
 </script>
 <script setup>
 const progressData = reactive([
@@ -62,6 +70,11 @@ $main_color:#BE8E55;
       }
     }
   }
+}
+.Upload_pdf{
+  @apply overflow-scroll;
+  width: 1160px;
+  height: 2106px;
 }
 
 </style>
