@@ -4,8 +4,9 @@
     </div>
     <div class="Upload_progress">
       <ul class="progress_content">
-        <li v-for="(item, i) in progressData" :key="i" class="progress_content__item"><img :src="item" alt="progress">
-            <div class="progress_content__item__line"></div>
+        <li v-for="(item, i) in progressData" :key="i" class="progress_content__item">
+          <img :src="item.img" alt="progress">
+          <div class="progress_content__item__text">{{item.text}}</div>
         </li>
       </ul>
     </div>
@@ -26,9 +27,17 @@ import upload from '../assets/img/upload.png';
 </script>
 <script setup>
 const progressData = reactive([
-  upload,
-  sign,
-  finish
+  {
+    img:upload,
+    text: '上傳簽署檔案'
+  },{
+    img:sign,
+    text: '進行簽署'
+  },
+  {
+    img:finish,
+    text: '簽署完成（下載）'
+  }
 ])
 
 
@@ -72,7 +81,8 @@ $main_color:#BE8E55;
   margin: 60px 0;
   fill: $main_color;
   .progress_content__item {
-    @apply relative;
+    @apply relative flex flex-col justify-center items-center whitespace-nowrap;
+    width: 60px;
     &:nth-last-child(1){
       &::before {
         display: none;
@@ -88,10 +98,14 @@ $main_color:#BE8E55;
       width: 95px;
       background-color: $main_color;
     }
-    
+    >img {
+      width: 60px;
+      height: 60px;
+    }
   }
   .progress_content {
-    @apply flex flex-nowrap items-center justify-between items-center;
+    @apply flex flex-nowrap items-center justify-between;
+    color: $main_color;
     &__item {
       margin: 0 47.5px;
       &__line {
