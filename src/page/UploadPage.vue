@@ -33,11 +33,11 @@ import {ref, reactive, onMounted} from 'vue';
 import finish from '../assets/img/finish.svg';
 import sign from '../assets/img/sign.svg';
 import upload from '../assets/img/upload.png';
-import pdfview from '../components/pdfview.vue';
-import axios from 'axios';
+// import pdfview from '../components/pdfview.vue';
+// import axios from 'axios';
 export default {
   components: {
-    pdfview
+    // pdfview
   }
 }
 </script>
@@ -98,18 +98,18 @@ function ondrop (e){
     // console.log(formData, fileList, e.dataTransfer.files[0]);
     console.log(formData)
 
-  axios.post('http://localhost:8080/uploadFile', formData({
-          headers: {
-              'Content-Type': 'multipart/form-data'
-          }
-      })
-    ).then(res => {
-        if (res.data !== null && res.data.length > 1) {
-            console.log(res.data)
-        }
-    }).catch(err=>{
-        console.log(err);
-    })
+  // axios.post('http://localhost:8080/uploadFile', formData({
+  //         headers: {
+  //             'Content-Type': 'multipart/form-data'
+  //         }
+  //     })
+  //   ).then(res => {
+  //       if (res.data !== null && res.data.length > 1) {
+  //           console.log(res.data)
+  //       }
+  //   }).catch(err=>{
+  //       console.log(err);
+  //   })
 }
 
 </script>

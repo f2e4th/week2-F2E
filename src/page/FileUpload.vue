@@ -3,7 +3,7 @@
     <div class="flex justify-center pt-10 pb-10">
         <img src="../assets/images/step1.png"/>
     </div>
-    <div class="flex justify-center">
+    <div  :class="nextPage == ''? '' : 'hidden'" class="flex justify-center">
         <div class="upload_content rounded-md flex items-center 
         justify-center my-4 flex flex-col">
         <div class="border rounded-md border-dashed 
@@ -20,7 +20,7 @@
             <div v-if="status == 0" class="mb-2 font-bold">或直接拖放檔案進來</div>
             <div class="font-bold">檔案限制格式：pdf，大小200mb以下</div>
         </div>
-        <div v-if="status == 1" class="mt-8 upload_inneer2 border rounded-md border-dashed 
+        <div :class="nextPage == '' ? '' : 'hidden'" class="mt-8 upload_inneer2 border rounded-md border-dashed 
         flex justify-center items-center flex-col">
             <p class="text-left file_title">
                 文件命名
@@ -29,15 +29,26 @@
         </div>
         </div>
     </div>
+    <div @click="nextStep()">下一步</div>
+    <div :class="nextPage == '' ? 'hidden' : ''">
+        <FileReview/>
+    </div>
 </div>
 </template>
 
 <script>
+import bus from '../srcipt/bus';
+import FileReview from '../page/FileReview.vue';
+
 export default {
+    components: {
+    FileReview
+    },
     data() {
         return {
             filename:'',
-            status:''
+            status:'',
+            nextPage:''
        }
     },
     methods:{
@@ -47,8 +58,12 @@ export default {
             if(this.status == 1){
                 this.filename = this.$refs['upload-file'].files[0].name;
                 console.log(this.filename);
+                bus.emit('fileUpload', this.$refs['upload-file'].files[0])
             }
         },
+        nextStep(){
+            this.nextPage = 1
+        }
     },
     create(){
         this.status = '';
