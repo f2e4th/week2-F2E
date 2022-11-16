@@ -15,8 +15,9 @@
     </div>
     <div class="Upload_content_wrapper">
       <div v-if="noFile" class="Upload_content">
-        <div class="file">
+        <div class="file relative">
           <img src="../assets/img/icon_upload_n.png" /> 選擇檔案
+          <input type="file" class="bg-grey-300 absolute top-0 left-0 w-full h-full opacity-0">
         </div>
         <div class="text">或直接拖放檔案進來</div>
         <div class="text">檔案限制格式：pdf,大小200mb以下</div>
@@ -59,7 +60,7 @@ const progressData = reactive([
     text: "簽署完成（下載）",
   },
 ]);
-const noFile = ref(false); // dev for false
+const noFile = ref(true); // dev for false
 </script>
 
 <style lang="scss" scoped>
