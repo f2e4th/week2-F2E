@@ -11,9 +11,11 @@
   "dependencies": {
     "fabric": "^5.2.4",
     "jspdf": "^2.5.1",
+    "mitt": "^3.0.0",
     "pdfjs-dist": "^3.0.279",
     "sass": "^1.56.1",
     "vue": "^3.2.41",
+    "vue-drawing-canvas": "^1.0.14",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {

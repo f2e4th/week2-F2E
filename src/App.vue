@@ -1,18 +1,21 @@
 <template>
   <div>
-   <SignPage/>
-   <FileReview/>
+   <!-- <FileUpload/> -->
+    <Header/>
+   <router-view />
   </div>
 </template>
 
 <script>
-import SignPage  from './page/SignPage.vue';
-import FileReview from './page/FileReview.vue'
+// import FileUpload  from './page/FileUpload.vue';
+// import FileReview from './page/FileReview.vue'
+import Header from './components/Header.vue'
 
 export default {
   components:{
-    SignPage,
-    FileReview
+    // FileUpload,
+    // FileReview,
+    Header
   }
  
 }
