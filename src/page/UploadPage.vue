@@ -22,14 +22,14 @@
         <div class="text">檔案限制格式：pdf,大小200mb以下</div>
       </div>
       <div v-else class="Upload_content Upload_content--uploaded">
-        <div class="top_section">
+        <div class="Upload_content_section">
           <div class="file">
             <img src="../assets/img/reupload.png" /> 重新上傳
           </div>
           <div class="text">或直接拖放檔案進來</div>
           <div class="text">檔案限制格式：pdf,大小200mb以下</div>
         </div>
-        <div class="bottom_section">
+        <div class="Upload_content_section">
           <div class="text">文件命名</div>
           <input class="bg-white px-2 py-1" type="text" value="房地產契約test">
         </div>
@@ -96,6 +96,9 @@ $main_color: #be8e55;
       font-size: 16px;
       line-height: 23px;
     }
+    &--uploaded {
+      @apply border-none;
+    }
   }
 }
 .Upload_progress {
@@ -133,5 +136,13 @@ $main_color: #be8e55;
       }
     }
   }
+}
+.Upload_content_section {
+  @apply border rounded-md border-dashed flex flex-col items-center justify-center w-full;
+  height: 240px;
+  margin: 15px;
+  width: 536px;
+  border-color: $main_color;
+
 }
 </style>
