@@ -15,7 +15,7 @@
             </label>
             <label v-if="status == 1" class="mb-2 reupload mt-1">
                 <input class="form-control hidden" ref="upload-file" type="file" accept="application/pdf"
-                @change="reuploadFile()" />
+                @change="uploadFile()" />
             </label>
             <div v-if="status == 0" class="mb-2 font-bold">或直接拖放檔案進來</div>
             <div class="font-bold">檔案限制格式：pdf，大小200mb以下</div>
@@ -33,8 +33,6 @@
 </template>
 
 <script>
-// import cavans from '../srcipt/canvas';
-// import pdf from '../srcipt/pdf';
 export default {
     data() {
         return {

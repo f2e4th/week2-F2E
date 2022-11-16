@@ -1,5 +1,3 @@
-export const sign= () => {
-
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
 const clearBtn = document.querySelector(".clear");
@@ -83,5 +81,3 @@ canvas.addEventListener("touchmove", draw);
 // 重設按鈕
 clearBtn.addEventListener("click", reset);
 saveBtn.addEventListener("click", saveImage);
-
-}

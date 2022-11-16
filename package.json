@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "fabric": "^5.2.4",
+    "jspdf": "^2.5.1",
+    "pdfjs-dist": "^3.0.279",
     "sass": "^1.56.1",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6"

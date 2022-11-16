@@ -1,4 +1,3 @@
-export const pdf = () => {
 const Base64Prefix = "data:application/pdf;base64,";
 const add = document.querySelector(".add");
 pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -26,7 +25,7 @@ async function printPDF(pdfData) {
   const context = canvas.getContext("2d");
 
   // 控制顯示PDF的寬高
-  canvas.height = viewport.height;
+  canvas.height = viewport.height;canvas
   canvas.width = viewport.width;
   const renderContext = {
     canvasContext: context,
@@ -84,5 +83,3 @@ download.addEventListener("click", () => {
   pdf.addImage(image, "png", 0, 0, width, height);
   pdf.save("download.pdf");
 });
-
-}
