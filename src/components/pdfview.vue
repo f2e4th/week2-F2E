@@ -17,6 +17,11 @@ export default defineComponent ({
 
 </script>
 
-<style>
-
+<style scope>
+.top-bar {
+  display: none !important;
+}
+.render-content canvas {
+  @apply w-full;
+}
 </style>
