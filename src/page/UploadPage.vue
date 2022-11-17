@@ -13,44 +13,27 @@
         </li>
       </ul>
     </div>
-    <div class="Upload_content_wrapper">
-      <div 
-        @dragleave="dragleave"
-        @drop="ondrop"
-        @dragenter="ondragenter"
-        @dragover="ondragover"
-        v-if="noFile"
-        ref="drag_upload"
-        class="Upload_content">
-        <div class="file relative">
-          <img src="../assets/img/icon_upload_n.png" /> 選擇檔案
-          <input type="file" class="bg-grey-300 absolute top-0 left-0 w-full h-full opacity-0">
-        </div>
-        <div class="text">或直接拖放檔案進來</div>
-        <div class="text">檔案限制格式：pdf,大小200mb以下</div>
-      </div>
-      <div v-else class="Upload_content Upload_content--uploaded">
-        <div class="Upload_content_section">
-          <div class="file">
-            <img src="../assets/img/reupload.png" /> 重新上傳
-          </div>
-          <div class="text">或直接拖放檔案進來</div>
-          <div class="text">檔案限制格式：pdf,大小200mb以下</div>
-        </div>
-        <div class="Upload_content_section">
-          <div class="text">文件命名</div>
-          <input class="bg-white px-2 py-1" type="text" value="房地產契約test">
-        </div>
+    <div v-if="uploadMode" class="Upload_content_wrapper">
+      <div class="Upload_content">
       </div>
 
+    </div>
+    <div v-else class="Upload_pdf">
+      <pdfview/>
     </div>
   </div>
 </template>
 <script>
-import { ref, reactive, onMounted } from "vue";
-import finish from "../assets/img/finish.svg";
-import sign from "../assets/img/sign.svg";
-import upload from "../assets/img/upload.png";
+import {ref, reactive, onMounted} from 'vue';
+import finish from '../assets/img/finish.svg';
+import sign from '../assets/img/sign.svg';
+import upload from '../assets/img/upload.png';
+import pdfview from '../components/pdfview.vue';
+export default {
+  components: {
+    pdfview
+  }
+}
 </script>
 <script setup>
 const progressData = reactive([
@@ -217,6 +200,11 @@ $main_color: #be8e55;
   margin: 15px;
   width: 536px;
   border-color: $main_color;
+.Upload_pdf{
+  @apply overflow-scroll;
+  width: 1160px;
+  height: 2106px;
+}
 
 }
 </style>
