@@ -1,6 +1,6 @@
 <template>
    <div class='container_pdf w-screen h-screen relative overflow-x-hidden'>
-    <SelectSign v-if="isSelectSign" @closeWarning="closeWarning" @selectedSign="selectedSign"  />
+    <!-- <SelectSign v-if="isSelectSign" @closeWarning="closeWarning" @selectedSign="selectedSign"  /> -->
     <div class="styledCreate__WrapperRight-sc-1i4fuzv-10 cKAFxH">
       <div id="viewer" tabindex="10" scale="1" class="styled__Wrapper-sc-cpx59f-1 gKmbon overflow-x-hidden">
         <div class="react-pdf__Document">
@@ -77,6 +77,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="">
+      
     </div>
   </div>
 </template>
@@ -234,34 +237,35 @@ export default {
       // 加入文字
       const textBtn = document.querySelector('.textBtn')
       textBtn.addEventListener('click', () => {
-          Swal.fire({
-            input: 'textarea',
-            inputAttributes: {
-              autocapitalize: 'off'
-            },
-            focusConfirm: false,
-            showCancelButton: true,
-            confirmButtonText: '確定',
-            cancelButtonText: '取消',
-            customClass: {
-              popup: 'customClass-popup rounded-3xl py-6 w-auto px-5',
-              title: 'customClass-title font-bold text-black pt-6 px-0',
-              input: 'customClass-input',
-              inputLabel: '',
-              actions: 'btns',
-              confirmButton: 'btn btn-confirm',
-              cancelButton: 'btn btn-cancel',
-            }
-          }).then((result) => {
-              // const canvas = new fabric.Canvas('canvas')
-              var text = new fabric.Text(result.value, (image) => {
-                image.top = 10
-                image.left = 10
-                image.scaleX = 0.5
-                image.scaleY = 0.5
-              })
-              canvas.add(text)
-          })
+
+          // Swal.fire({
+          //   input: 'textarea',
+          //   inputAttributes: {
+          //     autocapitalize: 'off'
+          //   },
+          //   focusConfirm: false,
+          //   showCancelButton: true,
+          //   confirmButtonText: '確定',
+          //   cancelButtonText: '取消',
+          //   customClass: {
+          //     popup: 'customClass-popup rounded-3xl py-6 w-auto px-5',
+          //     title: 'customClass-title font-bold text-black pt-6 px-0',
+          //     input: 'customClass-input',
+          //     inputLabel: '',
+          //     actions: 'btns',
+          //     confirmButton: 'btn btn-confirm',
+          //     cancelButton: 'btn btn-cancel',
+          //   }
+          // }).then((result) => {
+          //     // const canvas = new fabric.Canvas('canvas')
+          //     var text = new fabric.Text(result.value, (image) => {
+          //       image.top = 10
+          //       image.left = 10
+          //       image.scaleX = 0.5
+          //       image.scaleY = 0.5
+          //     })
+          //     canvas.add(text)
+          // })
       })
       // 前一頁
       const prePage = () => {

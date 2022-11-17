@@ -1,7 +1,9 @@
 <template>
-  <div class="warningAlert_pdf w-full h-screen left-0 top-0 fixed">
-    <div class="select_bg absolute h-screen w-screen left-0 top-0" @click="closeWarning"></div>
-    <div class="card-inner absolute text-xl pop-container-choose w-full z-50" v-if="isSelectMode">
+  <div class="draw_modal w-full left-0 top-0 fixed">
+    <!-- <div class="relative" @click="closeWarning">
+      <img class="absolute left-0 top-0" src="../assets/images/icon_Close Square_n.png" />
+    </div> -->
+    <div class="card-inner absolute text-xl pop-container-choose w-full z-50" v-if="isSelectMode && signStatus != null">
       <div class="bg rounded-3xl overflow-hidden shadow-lg w-full">
         <div class="px-4 py-6 flex flex-col justify-center w-full">
           <div class="font-bold text-lg mb-8 whitespace-nowrap text-center proj-text-primary">請選擇簽名</div>
@@ -22,10 +24,13 @@
     </div>
     <div class="card-inner absolute text-xl w-full z-50 pop-container" v-if="!isSelectMode">
       <div class="bg rounded-3xl overflow-hidden shadow-lg w-full">
-
+        <div class="relative mt-3" @click="closeWarning">
+        <img class="absolute right-0 top-0 mr-4" src="../assets/images/icon_Close Square_n.png" />
+    </div>
         <div class="index_Sign flex flex-col items-center w-full py-4 px-2">
+       
 
-          <div class="container-pop mx-auto mb-5 text-base md:text-lg">
+          <!-- <div class="container-pop mx-auto mb-5 text-base md:text-lg">
             <div class="inner-container">
               <div class="toggle" @click="isSignSelf = false">
                 <p>匯入簽名檔</p>
@@ -42,13 +47,30 @@
                 <p>手寫簽名</p>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <CanvasModulePop :isSignSelf="isSignSelf" v-on:closeWarning="closeWarning" v-on:getStroke="getStroke" v-on:backToChoose="backToChoose" />
+          <CanvasModulePop :isSignSelf="isSignSelf" v-on:closeWarning="closeWarning" v-on:getStroke="getStroke" v-on:backToChoose="backToChoose" 
+          @sign="getSign"
+          />
 
         </div>
       </div>
     </div>
+
+    <div class="card-inner absolute text-xl pop-container-choose w-full z-50" v-if="signStatus == null && isSelectMode">
+      <div class="bg rounded-3xl overflow-hidden shadow-lg w-full">
+        <div class="px-4 py-6 flex flex-col justify-center w-full">
+          <div class="font-bold text-lg mb-8 whitespace-nowrap text-center">目前還沒有簽名喔~</div>
+          <div class="text-sm">請創建新的簽名檔，可上傳圖片或線上簽名</div>
+          <a class="flex justify-center mt-4" @click="isSelectMode = false">
+          <img src="../assets/images/add_sign.png"/>
+          </a>
+          <a class="flex justify-center mt-4">
+          <img src="../assets/images/uploadSign.png"/>
+          </a>
+        </div>
+      </div>
+  </div>
   </div>
 </template>
 
@@ -66,9 +88,12 @@ export default {
     const signArr = ref('')
     const isSelectMode = ref(true)
     const isSignSelf = ref(true)
+    const signStatus = ref(null)
 
     onMounted(() => {
       init()
+      signStatus.value = localStorage.getItem('vue-canvas')
+      console.log(signStatus.value)
 
     })
     onUnmounted(() => {
@@ -112,6 +137,12 @@ export default {
       // isSelectMode.value = backToChoose
     }
 
+    const getSign = () =>{
+      closeWarning();
+      signStatus.value !=null;
+      isSelectMode.value = true;
+    }
+
     return {
       // url,
       signArr,
@@ -122,29 +153,27 @@ export default {
       isSelectMode,
       isSignSelf,
       getStroke,
-      backToChoose
+      backToChoose,
+      signStatus,
+      getSign
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.warningAlert_pdf {
-  // background: rgba(186, 186, 186, 0.47);
-  // backdrop-filter: blur(2.5px);
+.draw_modal {
   z-index: 99;
-}
-.select_bg {
-  background: rgba(186, 186, 186, 0.47);
-  backdrop-filter: blur(2.5px);
+  height: 120vh;
 }
 .card-inner {
   left: 50%;
   top: 40%;
   transform: translate(-50%, -50%);
+  color: #8C5D19;
 }
 .bg {
-  background: #F0F0F0;
+  background: #EFE3D4;
 }
 
 .container-pop {
