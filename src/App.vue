@@ -1,7 +1,7 @@
 <template>
   <div>
     <UploadPage/>
-   <FileReview/>
+   <!-- <FileReview/> -->
    <!-- <FileUpload/> -->
     <Header/>
    <router-view />
@@ -12,7 +12,7 @@
 // import homePage from './page/homePage.vue'
 import UploadPage from './page/UploadPage.vue'
 // import SignPage  from './page/SignPage.vue';
-import FileReview from './page/FileReview.vue';
+// import FileReview from './page/FileReview.vue';
 import Header from './components/Header.vue';
 
 export default {
@@ -20,10 +20,8 @@ export default {
     // homePage,
     UploadPage,
     // SignPage,
-    FileReview,
+    // FileReview,
     Header,
-// import FileUpload  from './page/FileUpload.vue';
-// import FileReview from './page/FileReview.vue'
   }
 }
 </script>
