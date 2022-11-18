@@ -14,7 +14,12 @@
       </ul>
     </div>
     <div v-if="uploadMode" class="Upload_content_wrapper">
-      <div class="Upload_content">
+      <div class="Upload_content" 
+        @drop="ondrop" 
+        @dragleave="dragleave"
+        @dragenter="ondragenter"
+        @dragover="ondragover"
+        >
       </div>
 
     </div>
@@ -50,47 +55,17 @@ const progressData = reactive([
     text: "簽署完成（下載）",
   },
 ]);
-const fileList = [];
-const noFile = ref(true); // dev for false
-const drag_upload = ref(null) // vue3 使用  ref 的方式
+var fileList = [];
+var uploadMode = ref(true); // dev for false
+// const drag_upload = ref(null) // vue3 使用  ref 的方式
 onMounted(()=>{
-  console.log(drag_upload)
-  // drag_upload.ondragleave = (e) => {
-  //   e.preventDefault();  //阻止離開時的瀏覽器預設行為
-  // }
-  // drag_upload.ondrop = (e) => {
-  //   e.preventDefault(); //阻止拖放後的瀏覽器預設行為
-  //   const data = e.dataTransfer.files // 取得檔案
-  //   if(data.length < 1){
-  //     return; // 檢查檔案是否有拖曳進來
-  //   }
-  //   console.log(e.dataTransfer.files);
-  //   const formData = new FormData(); // 建立一個 newForm
-  //   for(var i=0;e.dataTransfer.files.length;i++){
-  //     console.log(e.dataTransfer.files.length);
-  //     if(e.dataTransfer.files[i.name.indexOf('pdf') === -1]){ // 檢查是否上傳的檔案不符合格式
-  //       alert('請上傳pdf檔案')
-  //       return;
-  //     }
-  //     formData.append('uploadFile', e.dataTransfer.files[i], e.dataTransfer.files[i].name);
-  //   }
-  //   fileList = fileList.concat.dataTransfer.files[0];
-  //   console.log(formData, fileList, e.dataTransfer.files[0]);
-
-  // }
-  // drag_upload.ondragenter = (e) =>{
-  //   e.preventDefault();  //阻止拖入時的瀏覽器預設行為
-  //   drag_upload.border = "2px dashed red"; // 拖曳移入後更改border
-  // }
-  // drag_upload.ondragover = (e) => {
-  //   e.preventDefault();
-  // }
-
 })
 function dragleave (e){
+  console.log('拖出');
   e.preventDefault();  //阻止離開時的瀏覽器預設行為
 }
 function ondrop (e){
+  console.log('拖曳結束')
   e.preventDefault(); //阻止拖放後的瀏覽器預設行為
     const data = e.dataTransfer.files // 取得檔案
     if(data.length < 1){
@@ -114,6 +89,7 @@ function ondragenter (e){
   console.log('拖入')
 }
 function ondragover(e){
+  console.log('正在拖')
   e.preventDefault();
 }
 
