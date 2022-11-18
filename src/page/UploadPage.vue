@@ -34,6 +34,7 @@ import finish from '../assets/img/finish.svg';
 import sign from '../assets/img/sign.svg';
 import upload from '../assets/img/upload.png';
 import pdfview from '../components/pdfview.vue';
+import axios from 'axios';
 export default {
   components: {
     pdfview
@@ -64,26 +65,6 @@ function dragleave (e){
   console.log('拖出');
   e.preventDefault();  //阻止離開時的瀏覽器預設行為
 }
-function ondrop (e){
-  console.log('拖曳結束')
-  e.preventDefault(); //阻止拖放後的瀏覽器預設行為
-    const data = e.dataTransfer.files // 取得檔案
-    if(data.length < 1){
-      return; // 檢查檔案是否有拖曳進來
-    }
-    console.log(e.dataTransfer.files);
-    const formData = new FormData(); // 建立一個 newForm
-    for(var i=0;e.dataTransfer.files.length;i++){
-      console.log(e.dataTransfer.files.length);
-      if(e.dataTransfer.files[i].name.indexOf('pdf') === -1){ // 檢查是否上傳的檔案不符合格式
-        alert('請上傳pdf檔案')
-        return;
-      }
-      formData.append('uploadFile', e.dataTransfer.files[i], e.dataTransfer.files[i].name);
-    }
-    fileList = fileList.concat.dataTransfer.files[0];
-    console.log(formData, fileList, e.dataTransfer.files[0]);
-}
 function ondragenter (e){
   e.preventDefault();  //阻止拖入時的瀏覽器預設行為
   console.log('拖入')
@@ -91,6 +72,44 @@ function ondragenter (e){
 function ondragover(e){
   console.log('正在拖')
   e.preventDefault();
+}
+function ondrop (e){
+  console.log('拖曳結束')
+  e.preventDefault(); //阻止拖放後的瀏覽器預設行為
+    const data = e.dataTransfer.files // 取得檔案
+    if(data.length < 1){
+      return; // 檢查檔案是否有拖曳進來
+    }
+    if(data.size >= 2000000){ // 超過2mb不可上傳
+      alert('不可超過2mb');
+      return;
+    }
+    console.log(e.dataTransfer.files); 
+    const formData = new FormData(); // 建立一個 newForm
+    for(var i=0;e.dataTransfer.files.length-1;i++){
+      console.log(e.dataTransfer.files.length);
+      if(e.dataTransfer.files[i].name.indexOf('pdf') === -1){ // 檢查是否上傳的檔案不符合格式
+        alert('請上傳pdf檔案')
+        return;
+      }
+      formData.append('uploadFile', e.dataTransfer.files[i], e.dataTransfer.files[i].name);
+    }
+    // fileList = fileList.concat.dataTransfer.files[0];
+    // console.log(formData, fileList, e.dataTransfer.files[0]);
+    console.log(formData)
+
+  axios.post('http://localhost:8080/uploadFile', formData({
+          headers: {
+              'Content-Type': 'multipart/form-data'
+          }
+      })
+    ).then(res => {
+        if (res.data !== null && res.data.length > 1) {
+            console.log(res.data)
+        }
+    }).catch(err=>{
+        console.log(err);
+    })
 }
 
 </script>
