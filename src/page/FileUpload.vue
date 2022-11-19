@@ -79,13 +79,17 @@ export default {
     };
   },
   methods: {
-    uploadFile() {
-      this.status = this.$refs["upload-file"].files.length;
-      console.log(this.status);
-      if (this.status == 1) {
-        this.filename = this.$refs["upload-file"].files[0].name;
+    uploadFile(data) {
+        this.status = this.$refs["upload-file"].files.length||data.length;
+        console.log(this.status);
+        if (this.status == 1) {
+            if(data){
+                this.filename = data[0].name;
+            } else {
+                this.filename = this.$refs["upload-file"].files[0].name;
+            }
         console.log(this.filename);
-        bus.emit("fileUpload", this.$refs["upload-file"].files[0]);
+        // bus.emit("fileUpload", this.$refs["upload-file"].files[0]);
       }
     },
     nextStep() {
@@ -115,21 +119,21 @@ export default {
         alert("不可超過2mb");
         return;
       }
-      console.log(e.dataTransfer.files);
-      const formData = new FormData(); // 建立一個 newForm
-      for (var i = 0; e.dataTransfer.files.length - 1; i++) {
-        console.log(e.dataTransfer.files.length);
-        if (e.dataTransfer.files[i].name.indexOf("pdf") === -1) {
-          // 檢查是否上傳的檔案不符合格式
-          alert("請上傳pdf檔案");
-          return;
-        }
-        formData.append(
-          "uploadFile",
-          e.dataTransfer.files[i],
-          e.dataTransfer.files[i].name
-        );
-      }
+      this.uploadFile(data);
+    //   const formData = new FormData(); // 建立一個 newForm
+    //   for (var i = 0; e.dataTransfer.files.length - 1; i++) {
+    //     // console.log(e.dataTransfer.files.length);
+    //     if (e.dataTransfer.files[i].name.indexOf("pdf") === -1) {
+    //       // 檢查是否上傳的檔案不符合格式
+    //       alert("請上傳pdf檔案");
+    //       return;
+    //     }
+    //     formData.append(
+    //       "uploadFile",
+    //       e.dataTransfer.files[i],
+    //       e.dataTransfer.files[i].name
+    //     );
+    //   }
     },
   },
   create() {
