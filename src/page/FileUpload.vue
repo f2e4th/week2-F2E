@@ -55,6 +55,7 @@
     <div :class="nextPage == '' ? 'hidden' : ''">
       <FileReview />
     </div>
+    <button @click="getfile">取得檔案</button>
   </div>
 </template>
 
@@ -82,15 +83,30 @@ export default {
     uploadFile(data) {
         this.status = this.$refs["upload-file"].files.length||data.length;
         console.log(this.status);
+        var filedata;
         if (this.status == 1) {
             if(data){
                 this.filename = data[0].name;
+                filedata = data[0]
             } else {
                 this.filename = this.$refs["upload-file"].files[0].name;
+                filedata = his.$refs["upload-file"].files[0]
             }
         console.log(this.filename);
         // bus.emit("fileUpload", this.$refs["upload-file"].files[0]);
+        this.store(filedata)
       }
+    },
+    store(thisFile){
+        // btoa(thisFile)
+        // localStorage.setItem('file', thisFile)
+        var newImg = canvas.toDataURL(thisFile);
+        // showImage.src = newImg;
+        localStorage.setItem('file', newImg)
+    },
+    getfile(){
+        var file =  localStorage.getItem('file')
+        console.log(atob(file));
     },
     nextStep() {
       this.nextPage = 1;
