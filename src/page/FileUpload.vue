@@ -53,7 +53,8 @@
     </div>
     <div @click="nextStep()">下一步</div>
     <div :class="nextPage == '' ? 'hidden' : ''">
-      <FileReview />
+      <!-- <FileReview /> -->
+      <pdfview />
     </div>
   </div>
 </template>
@@ -62,11 +63,13 @@
 import bus from "../srcipt/bus";
 import FileReview from "../page/FileReview.vue";
 import ProgressLine from "../components/progress.vue";
+import pdfview from '../components/pdfview.vue';
 
 export default {
   components: {
     FileReview,
     ProgressLine,
+    pdfview
   },
   data() {
     return {
@@ -99,6 +102,7 @@ export default {
       }
     },
     store(thisFile){
+        var canvas = new fabric.Canvas('canvas')
         var newImg = canvas.toDataURL(thisFile);
         localStorage.setItem('file', newImg)
 
