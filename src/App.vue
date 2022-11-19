@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UploadPage/>
+    <!-- <UploadPage/> -->
    <!-- <FileReview/> -->
    <!-- <FileUpload/> -->
     <Header/>
@@ -10,7 +10,7 @@
 
 <script>
 // import homePage from './page/homePage.vue'
-import UploadPage from './page/UploadPage.vue'
+// import UploadPage from './page/UploadPage.vue'
 // import SignPage  from './page/SignPage.vue';
 // import FileReview from './page/FileReview.vue';
 import Header from './components/Header.vue';
@@ -18,7 +18,7 @@ import Header from './components/Header.vue';
 export default {
   components:{
     // homePage,
-    UploadPage,
+    // UploadPage,
     // SignPage,
     // FileReview,
     Header,

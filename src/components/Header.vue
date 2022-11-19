@@ -5,8 +5,12 @@
             <a class="signBtn flex flex-col items-center w-20 py-4 cursor-pointer" @click="isSelectSign = true">
             <img src="../assets/images/Tab_sign.png" @click="signModal"/>
             </a>
-            <img src="../assets/images/Tab_date.png"/>
+            <a class="dateBtn flex flex-col items-center w-20 py-4 cursor-pointer">
+              <img src="../assets/images/Tab_date.png"/>
+            </a>
+           <a class="textBtn flex flex-col items-center w-20 py-4 cursor-pointer">
             <img src="../assets/images/Tab_text.png"/>
+           </a>
         </div>
     </div>
 </template>
@@ -37,23 +41,6 @@ export default {
         canvas.add(image)
       })
     }
-
-          // 加入簽名
-    const sign = document.querySelector('.signBtn')
-    //   if (localStorage.getItem('vue-canvas')) {
-    //     // sign.src = localStorage.getItem('vue-canvas')
-    //     signUrl.value = localStorage.getItem('vue-canvas')
-    //   }
-    //   sign.addEventListener('click', () => {
-    //     if (!signUrl.value) return
-    //     fabric.Image.fromURL(signUrl.value, (image) => {
-    //       image.top = 100
-    //       image.left = 100
-    //       image.scaleX = 0.5
-    //       image.scaleY = 0.5
-    //       canvas.add(image)
-    //     })
-    //   })
     return {
         isSelectSign,
         closeWarning,

@@ -12,75 +12,6 @@
         </div>
       </div>
     </div>
-    
-    <div class="footer fixed bottom-0 left-0 w-full z-50">
-      <div class="p-3 xl:p-0 ">
-        <div class="mr-auto flex w-full">
-          <div class="w-7/12 hidden xl:flex justify-end items-center bg-white">
-            <!-- 前一頁/下一頁 -->
-            <div class="flex items-center mx-2 item py-2 px-3 justify-between">
-              <a class="cursor-pointer block prePage-btn" id="prev-btn"></a>
-              <div class="px-3 flex items-center">
-                <p class="p-3"><span id="pageNum" class="pageNum">{{ pageNum }}</span></p>
-                <span class="px-1">/</span>
-                <p class="p-3"><span id="pageCount" class="pageCount">{{ pageCount }}</span></p>
-              </div>
-              <a class="cursor-pointer block nextPage-btn" id="next-btn">
-                <!-- <img src="@/assets/img/arrowRight.png" alt="" class="block object-contain"> -->
-              </a>
-            </div>
-            <!-- 放大縮小 -->
-            <div class="flex items-center mx-2 item py-2 px-3 justify-between">
-              <!-- <div>
-                <a class="cursor-pointer inline-block" @click="percentPlus"><img src="@/assets/img/Union1.png" alt=""></a>
-              </div> -->
-              <div class="px-3 flex items-center">
-                <p class="p-3">{{ width }}%</p>
-              </div>
-              <!-- <div>
-                <a class="cursor-pointer inline-block" @click="percentMinus"><img src="@/assets/img/Union2.png" alt=""></a>
-              </div> -->
-            </div>
-          </div>
-          <!-- 插入圖片 -->
-          <div class="w-full xl:w-3/12 flex justify-center bg-white rounded-3xl xl:rounded-none">
-            <a class="signBtn flex flex-col items-center w-20 py-4 cursor-pointer">
-              <!-- <div class="icon flex justify-center items-center">
-                <img src="@/assets/img/icon/icon1.png" alt="">
-              </div> -->
-              <p class="text-sm mt-1">簽名</p>
-            </a>
-            <a class="selectBtn flex flex-col items-center w-20 py-4" @click="isSelectSign = true">
-              <!-- <div class="icon flex justify-center items-center cursor-pointer">
-                <img src="@/assets/img/icon/icon2.png" alt="">
-              </div> -->
-              <p class="text-sm mt-1">勾選</p>
-            </a>
-            <a class="dateBtn flex flex-col items-center w-20 py-4">
-              <!-- <div class="icon flex justify-center items-center cursor-pointer">
-                <img src="@/assets/img/icon/icon3.png" alt="">
-              </div> -->
-              <p class="text-sm mt-1">日期</p>
-            </a>
-            <a class="textBtn flex flex-col items-center w-20 py-4">
-              <!-- <div class="icon flex justify-center items-center cursor-pointer">
-                <img src="@/assets/img/icon/icon4.png" alt="">
-              </div> -->
-              <p class="text-sm mt-1">插入文字</p>
-            </a>
-          </div>
-
-          <div class="w-2/12 hidden xl:flex justify-center items-center bg-white">
-            <button type="button" class="downloadBtn py-4 px-16 proj-bg-Gradient text-white rounded-3xl proj-border-primary border-2 h-auto">
-              完成簽署
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="">
-      
-    </div>
   </div>
 </template>
 
@@ -209,7 +140,6 @@ export default {
       // 加入簽名
       const sign = document.querySelector('.signBtn')
       if (localStorage.getItem('vue-canvas')) {
-        // sign.src = localStorage.getItem('vue-canvas')
         signUrl.value = localStorage.getItem('vue-canvas')
       }
       sign.addEventListener('click', () => {
@@ -224,7 +154,9 @@ export default {
       })
       // 加入日期
       const dateBtn = document.querySelector('.dateBtn')
-      const today = moment().format('YYYY/MM/DD')
+      let day = new Date();
+      const today = day.getFullYear() + '/' + day.getMonth() + '/' + day.getDate();
+
       dateBtn.addEventListener('click', () => {
         var text = new fabric.Text(today, (image) => {
           image.top = 10
@@ -233,6 +165,7 @@ export default {
           image.scaleY = 0.5
         })
         canvas.add(text)
+
       })
       // 加入文字
       const textBtn = document.querySelector('.textBtn')

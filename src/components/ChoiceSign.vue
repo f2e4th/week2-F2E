@@ -1,20 +1,17 @@
 <template>
   <div class="draw_modal w-full left-0 top-0 fixed">
-    <!-- <div class="relative" @click="closeWarning">
-      <img class="absolute left-0 top-0" src="../assets/images/icon_Close Square_n.png" />
-    </div> -->
     <div class="card-inner absolute text-xl pop-container-choose w-full z-50" v-if="isSelectMode && signStatus != null">
+      <div class="relative mt-3" @click="closeWarning">
+        <img class="absolute right-0 top-0 mr-4 mt-3" src="../assets/images/icon_Close Square_n.png" />
+    </div>
       <div class="bg rounded-3xl overflow-hidden shadow-lg w-full">
         <div class="px-4 py-6 flex flex-col justify-center w-full">
-          <div class="font-bold text-lg mb-8 whitespace-nowrap text-center proj-text-primary">請選擇簽名</div>
-          <div class="overflow-auto selected-h">
-            <div class="flex items-center mb-2" v-for="(item, idx) in signArr" :key="idx">
+          <div class="font-bold text-lg mb-8 whitespace-nowrap text-center proj-text-primary">選擇簽名</div>
+          <div class="selected-modal overflow-auto flex items-center justify-center flex-wrap">
+            <div class="mb-2 flex justify-center" v-for="(item, idx) in signArr" :key="idx">
               <div class="h-auto bg-white w-4/5 rounded-3xl py-2" @click="selectedSign(item)">
                 <img :src="item" class='sign mx-auto object-contain w-36 h-20' />
               </div>
-              <a class="p-2 w-1/5 inline-flex justify-center items-center" @click="delecteSign(idx)">
-                <!-- <img src="@/assets/img/delete.png" alt=""> -->
-              </a>
             </div>
           </div>
           <a class="proj-text-primary block mt-4 font-bold text-lg whitespace-nowrap" @click="isSelectMode = false">+ 新增簽名</a>
@@ -49,7 +46,7 @@
             </div>
           </div> -->
 
-          <CanvasModulePop :isSignSelf="isSignSelf" v-on:closeWarning="closeWarning" v-on:getStroke="getStroke" v-on:backToChoose="backToChoose" 
+          <CanvasDraw :isSignSelf="isSignSelf" v-on:closeWarning="closeWarning" v-on:getStroke="getStroke" v-on:backToChoose="backToChoose" 
           @sign="getSign"
           />
 
@@ -76,11 +73,11 @@
 
 <script>
 import { onMounted, onUnmounted, ref } from 'vue'
-import CanvasModulePop from './CanvasModule.vue'
+import CanvasDraw from './CanvasDraw.vue'
 export default {
   name: 'selectSign',
   components: {
-    CanvasModulePop
+    CanvasDraw
   },
   props: {
   },
@@ -114,19 +111,6 @@ export default {
       closeWarning()
     }
 
-    const delecteSign = (idx) => {
-      let arr = JSON.parse(localStorage.getItem('vue-canvas-array'))
-      if (arr.length > 1) {
-        arr.splice(idx, 1)
-        localStorage.setItem("vue-canvas-array", JSON.stringify(arr))
-      } else {
-        localStorage.removeItem('vue-canvas-array')
-      }
-
-
-      init()
-    }
-
     const getStroke = (getStroke) => {
       ctx.emit('selectedSign', getStroke)
     }
@@ -148,7 +132,6 @@ export default {
       signArr,
       closeWarning,
       selectedSign,
-      delecteSign,
       init,
       isSelectMode,
       isSignSelf,
@@ -229,7 +212,7 @@ export default {
   clip-path: inset(0 0% 0% 50%) !important;
 }
 
-.selected-h {
+.selected-modal {
   height: 18rem;
 }
 .pop-container-choose {
