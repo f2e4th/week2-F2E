@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UploadPage/>
+    <!-- <UploadPage/> -->
    <!-- <FileReview/> -->
    <!-- <FileUpload/> -->
     <Header/>

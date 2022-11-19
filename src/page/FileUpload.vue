@@ -1,7 +1,8 @@
 <template>
 <div class="container_sign">
     <div class="flex justify-center pt-10 pb-10">
-        <img src="../assets/images/step1.png"/>
+        <!-- <img src="../assets/images/step1.png"/> -->
+        <ProgressLine :arrStatus="arrStatus" />
     </div>
     <div  :class="nextPage == ''? '' : 'hidden'" class="flex justify-center">
         <div class="upload_content rounded-md flex items-center 
@@ -39,16 +40,19 @@
 <script>
 import bus from '../srcipt/bus';
 import FileReview from '../page/FileReview.vue';
+import ProgressLine from '../components/progress.vue'
 
 export default {
     components: {
-    FileReview
+    FileReview,
+    ProgressLine
     },
     data() {
         return {
             filename:'',
             status:'',
-            nextPage:''
+            nextPage:'',
+            arrStatus: [1, 2, 2]
        }
     },
     methods:{
