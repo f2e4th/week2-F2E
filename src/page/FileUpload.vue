@@ -36,7 +36,7 @@
               @change="uploadFile()"
             />
           </label>
-          <div v-if="status == 0" class="mb-2 font-bold">
+          <div v-if="status == 1" class="mb-2 font-bold">
             或直接拖放檔案進來
           </div>
           <div class="font-bold">檔案限制格式：pdf，大小200mb以下</div>
@@ -47,7 +47,7 @@
           class="mt-8 upload_inneer2 border rounded-md border-dashed flex justify-center items-center flex-col"
         >
           <p class="text-left file_title">文件命名</p>
-          <input type="text" class="file_name" />
+          <input type="text" class="file_name bg-white file_name_input" v-model="filename"/>
         </div>
       </div>
     </div>
@@ -55,7 +55,6 @@
     <div :class="nextPage == '' ? 'hidden' : ''">
       <FileReview />
     </div>
-    <button @click="getfile">取得檔案</button>
   </div>
 </template>
 
@@ -90,23 +89,20 @@ export default {
                 filedata = data[0]
             } else {
                 this.filename = this.$refs["upload-file"].files[0].name;
-                filedata = his.$refs["upload-file"].files[0]
+                filedata = this.$refs["upload-file"].files[0]
             }
         console.log(this.filename);
         // bus.emit("fileUpload", this.$refs["upload-file"].files[0]);
         this.store(filedata)
+      } else {
+        this.step = 1;
       }
     },
     store(thisFile){
-        // btoa(thisFile)
-        // localStorage.setItem('file', thisFile)
         var newImg = canvas.toDataURL(thisFile);
-        // showImage.src = newImg;
         localStorage.setItem('file', newImg)
-    },
-    getfile(){
-        var file =  localStorage.getItem('file')
-        console.log(atob(file));
+
+        this.step = 2
     },
     nextStep() {
       this.nextPage = 1;
@@ -159,6 +155,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$main_color: #be8e55;
 .upload {
   background-image: url("../assets/images/Option.png");
   height: 40px;
@@ -173,5 +170,8 @@ export default {
   width: 100px;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+.file_name_input {
+    color: $main_color;
 }
 </style>
