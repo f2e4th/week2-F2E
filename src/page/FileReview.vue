@@ -1,5 +1,6 @@
 <template>
    <div class='container_pdf w-screen h-screen relative overflow-x-hidden'>
+    <div class="downloadBtn cursor-pointer">完成</div>
     <!-- <SelectSign v-if="isSelectSign" @closeWarning="closeWarning" @selectedSign="selectedSign"  /> -->
     <div class="styledCreate__WrapperRight-sc-1i4fuzv-10 cKAFxH">
       <div id="viewer" tabindex="10" scale="1" class="styled__Wrapper-sc-cpx59f-1 gKmbon overflow-x-hidden">
@@ -209,8 +210,8 @@ export default {
         // queueRenderPage(pageNum)
         Init(pageNum.value)
       }
-      document.querySelector('.prePage-btn-top').addEventListener('click', prePage)
-      document.querySelector('.prePage-btn').addEventListener('click', prePage)
+      // document.querySelector('.prePage-btn-top').addEventListener('click', prePage)
+      // document.querySelector('.prePage-btn').addEventListener('click', prePage)
       // 下一頁
       const nextPage = () => {
         if (pageNum.value >= pageCount.value) {
@@ -220,11 +221,10 @@ export default {
         // queueRenderPage(pageNum)
         Init(pageNum.value)
       }
-      document.querySelector('.nextPage-btn-top').addEventListener('click', nextPage)
-      document.querySelector('.nextPage-btn').addEventListener('click', nextPage)
+      // document.querySelector('.nextPage-btn-top').addEventListener('click', nextPage)
+      // document.querySelector('.nextPage-btn').addEventListener('click', nextPage)
       // 下載
       const pdf = new jsPDF()
-      const downloadBtn = document.querySelectorAll(".downloadBtn")
       const download = () => {
         // 將 canvas 存為圖片
         const image = canvas.toDataURL("image/png")
@@ -237,10 +237,12 @@ export default {
       }
       const finish = async() => {
         await download()
-        ctx.emit('finishSign', true)
       }
-      document.querySelector('.downloadBtnTop').addEventListener('click', finish)
-      document.querySelector('.downloadBtn').addEventListener('click', finish)
+
+      document.querySelector('.downloadBtn').addEventListener('click', () => {
+        console.log('1')
+        finish()
+      })
     }
     const closeWarning = (closeWarning) => {
       isSelectSign.value = closeWarning

@@ -1,5 +1,8 @@
 <template>
-    <div class="container_tab flex justify-center">
+    <div class="container_tab flex justify-between">
+      <a class="nextBtn flex flex-col items-center w-20 py-4 ml-4 cursor-pointer">
+        <img src="../assets/images/previous_btn.png"/>
+       </a>
     <SelectSign v-if="isSelectSign" @closeWarning="closeWarning" @selectedSign="selectedSign"  />
         <div class="flex justify-between">
             <a class="signBtn flex flex-col items-center w-20 py-4 cursor-pointer" @click="isSelectSign = true">
@@ -12,6 +15,9 @@
             <img src="../assets/images/Tab_text.png"/>
            </a>
         </div>
+        <a class="nextBtn flex flex-col items-center w-20 py-4 cursor-not-allowed">
+            <img src="../assets/images/disabled-next.png"/>
+        </a>
     </div>
 </template>
 

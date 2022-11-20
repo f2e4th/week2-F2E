@@ -29,7 +29,7 @@
         </div>
         </div>
     </div>
-    <div @click="nextStep()">下一步</div>
+    <div @click="nextStep()" :class="nextPage == ''">下一步</div>
     <div :class="nextPage == '' ? 'hidden' : ''">
         <FileReview/>
     </div>
