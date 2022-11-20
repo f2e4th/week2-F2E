@@ -2,7 +2,7 @@
   <div class="draw_modal w-full left-0 top-0 fixed">
     <div class="card-inner absolute text-xl pop-container-choose w-full z-50" v-if="isSelectMode && signStatus != null">
       <div class="relative mt-3" @click="closeWarning">
-        <img class="absolute right-0 top-0 mr-4 mt-3" src="../assets/images/icon_Close Square_n.png" />
+        <img class="absolute right-0 top-0 mr-4 mt-3" src="../assets/images/icon_Close_Square_n.png" />
     </div>
       <div class="bg rounded-3xl overflow-hidden shadow-lg w-full">
         <div class="px-4 py-6 flex flex-col justify-center w-full">
@@ -22,7 +22,7 @@
     <div class="card-inner absolute text-xl w-full z-50 pop-container" v-if="!isSelectMode">
       <div class="bg rounded-3xl overflow-hidden shadow-lg w-full">
         <div class="relative mt-3" @click="closeWarning">
-        <img class="absolute right-0 top-0 mr-4" src="../assets/images/icon_Close Square_n.png" />
+        <img class="absolute right-0 top-0 mr-4" src="../assets/images/icon_Close_Square_n.png" />
     </div>
         <div class="index_Sign flex flex-col items-center w-full py-4 px-2">
        

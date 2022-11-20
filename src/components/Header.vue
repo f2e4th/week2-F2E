@@ -2,7 +2,7 @@
     <div class="container_tab flex justify-between items-center px-1">
       <a @click="prevPage" class="btn prevBtn flex items-center w-20 py-4 ml-4 cursor-pointer">
         <!-- <img src="../assets/images/previous_btn.png"/> -->
-        <img src="../assets/images/icon_arrows left_n.svg" alt="previcon">
+        <img src="../assets/images/icon_arrows_left_n.svg" alt="previcon">
         Previous
        </a>
     <SelectSign v-if="isSelectSign" @closeWarning="closeWarning" @selectedSign="selectedSign"  />
@@ -19,7 +19,7 @@
         </div>
         <div @click="nextStep" class="btn nextBtn flex  items-center w-20 py-4 cursor-not-allowed">
             <!-- <img src="../assets/images/disabled-next.png"/> -->
-            Next<img src="../assets/images/icon_arrows right_n.svg" alt="nexticon">
+            Next<img src="../assets/images/icon_arrows_right_n.svg" alt="nexticon">
         </div>
     </div>
 </template>
@@ -27,7 +27,6 @@
 <script>
 import SelectSign from '../components/ChoiceSign.vue';
 import { onMounted, ref, reactive } from 'vue';
-import nexticon from '../assets/images/icon_arrows right_n.svg'
 var canvas = null;
 export default {
     components: {
