@@ -16,6 +16,11 @@ const routes = [
     name: 'FileReview',
     component: () => import('../page/FileReview.vue')
   },
+  {
+    path: '/pdfview',
+    name: 'pdfview',
+    component: () => import('../components/pdfview.vue')
+  },
 ]
 
 const router = createRouter({
