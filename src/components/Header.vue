@@ -1,7 +1,9 @@
 <template>
     <div class="container_tab flex justify-between items-center px-1">
-      <a class="nextBtn flex flex-col items-center w-20 py-4 ml-4 cursor-pointer">
-        <img src="../assets/images/previous_btn.png"/>
+      <a @click="prevPage" class="btn prevBtn flex items-center w-20 py-4 ml-4 cursor-pointer">
+        <!-- <img src="../assets/images/previous_btn.png"/> -->
+        <img src="../assets/images/icon_arrows left_n.svg" alt="previcon">
+        Previous
        </a>
     <SelectSign v-if="isSelectSign" @closeWarning="closeWarning" @selectedSign="selectedSign"  />
         <div class="flex justify-between">
@@ -41,6 +43,9 @@ export default {
     const nextStep = function(){
       ctx.emit('nextStep')
     }
+    const prevPage = function(){
+      ctx.emit('prevPage')
+    }
 
   
     const selectedSign = (selectedSign) => {
@@ -77,6 +82,8 @@ $main_color: #be8e55;
   height: 34px;
 
 }
-
+.prevBtn {
+  width: 99px;
+}
 
 </style>

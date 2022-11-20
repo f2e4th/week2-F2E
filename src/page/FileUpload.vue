@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header @nextStep = "nextStep"></Header>
+    <Header @nextStep = "nextStep" @prevPage="prevPage"></Header>
     <div class="container_sign">
       <div class="flex justify-center pt-10 pb-10">
         <!-- <img src="../assets/images/step1.png"/> -->
@@ -200,6 +200,10 @@ export default {
         alert('請先上傳檔案')
       }
       // this.$router.push({ name: "FileReview" }) 
+    },
+    prevPage(){
+      console.log('上一頁')
+      this.nextPage = "";
     },
     dragleave(e) {
       console.log("拖出");
