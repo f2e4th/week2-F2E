@@ -1,5 +1,5 @@
 <template>
-    <div class="container_tab flex justify-between">
+    <div class="container_tab flex justify-between items-center px-1">
       <a class="nextBtn flex flex-col items-center w-20 py-4 ml-4 cursor-pointer">
         <img src="../assets/images/previous_btn.png"/>
        </a>
@@ -15,15 +15,17 @@
             <img src="../assets/images/Tab_text.png"/>
            </a>
         </div>
-        <a @click="nextStep" class="nextBtn flex flex-col items-center w-20 py-4 cursor-not-allowed">
-            <img src="../assets/images/disabled-next.png"/>
-        </a>
+        <div @click="nextStep" class="btn nextBtn flex  items-center w-20 py-4 cursor-not-allowed">
+            <!-- <img src="../assets/images/disabled-next.png"/> -->
+            Next<img src="../assets/images/icon_arrows right_n.svg" alt="nexticon">
+        </div>
     </div>
 </template>
 
 <script>
 import SelectSign from '../components/ChoiceSign.vue';
 import { onMounted, ref, reactive } from 'vue';
+import nexticon from '../assets/images/icon_arrows right_n.svg'
 var canvas = null;
 export default {
     components: {
@@ -62,8 +64,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$main_color: #be8e55;
 .container_tab{
     background: #FFFFFF;
+}
+.btn {
+  @apply justify-center cursor-pointer rounded;
+  color: $main_color;
+  font-weight: 500;
+  background-color: #EFE3D4;
+  width: 70px;
+  height: 34px;
+
 }
 
 

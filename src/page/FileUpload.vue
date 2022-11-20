@@ -53,7 +53,7 @@
           </div>
         </div>
       </div>
-      <div @click="nextStep()" :class="nextPage == ''">下一步</div>
+      <!-- <div @click="nextStep()" :class="nextPage == ''">下一步</div> -->
       <div :class="nextPage == '' ? 'hidden' : ''">
         <FileReview />
         <!-- <pdfview /> -->
@@ -194,7 +194,11 @@ export default {
       }
     },
     nextStep() {
-      this.nextPage = 1;
+      if(window.localStorage.getItem('pdfData')){
+        this.nextPage = 1;
+      } else {
+        alert('請先上傳檔案')
+      }
       // this.$router.push({ name: "FileReview" }) 
     },
     dragleave(e) {
