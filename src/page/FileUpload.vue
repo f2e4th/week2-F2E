@@ -1,60 +1,63 @@
 <template>
-  <div class="container_sign">
-    <div class="flex justify-center pt-10 pb-10">
-      <!-- <img src="../assets/images/step1.png"/> -->
-      <ProgressLine :arrStatus="arrStatus" />
-    </div>
-    <div :class="nextPage == '' ? '' : 'hidden'" class="flex justify-center">
-      <div
-        class="upload_content rounded-md flex items-center justify-center my-4 flex flex-col"
-        @drop="ondrop"
-        @dragleave="dragleave"
-        @dragenter="ondragenter"
-        @dragover="ondragover"
-      >
+  <div>
+    <Header @nextStep = "nextStep"></Header>
+    <div class="container_sign">
+      <div class="flex justify-center pt-10 pb-10">
+        <!-- <img src="../assets/images/step1.png"/> -->
+        <ProgressLine :arrStatus="arrStatus" />
+      </div>
+      <div :class="nextPage == '' ? '' : 'hidden'" class="flex justify-center">
         <div
-          class="border rounded-md border-dashed flex justify-center items-center flex-col"
-          :class="status == 0 ? 'upload_inneer1' : 'upload_inneer2'"
+          class="upload_content rounded-md flex items-center justify-center my-4 flex flex-col"
+          @drop="ondrop"
+          @dragleave="dragleave"
+          @dragenter="ondragenter"
+          @dragover="ondragover"
         >
-          {{ status == 1 ? filename : "" }}
-          <label v-if="status == 0" class="mb-2 upload mt-1">
-            <input
-              class="form-control hidden"
-              type="file"
-              ref="upload-file"
-              accept="application/pdf"
-              @change="uploadFile()"
-            />
-            <!-- <img src="../assets/images/Option.png"/> -->
-          </label>
-          <label v-if="status == 1" class="mb-2 reupload mt-1">
-            <input
-              class="form-control hidden"
-              ref="upload-file"
-              type="file"
-              accept="application/pdf"
-              @change="uploadFile()"
-            />
-          </label>
-          <div v-if="status == 1" class="mb-2 font-bold">
-            或直接拖放檔案進來
+          <div
+            class="border rounded-md border-dashed flex justify-center items-center flex-col"
+            :class="status == 0 ? 'upload_inneer1' : 'upload_inneer2'"
+          >
+            {{ status == 1 ? filename : "" }}
+            <label v-if="status == 0" class="mb-2 upload mt-1">
+              <input
+                class="form-control hidden"
+                type="file"
+                ref="upload-file"
+                accept="application/pdf"
+                @change="uploadFile()"
+              />
+              <!-- <img src="../assets/images/Option.png"/> -->
+            </label>
+            <label v-if="status == 1" class="mb-2 reupload mt-1">
+              <input
+                class="form-control hidden"
+                ref="upload-file"
+                type="file"
+                accept="application/pdf"
+                @change="uploadFile()"
+              />
+            </label>
+            <div v-if="status == 1" class="mb-2 font-bold">
+              或直接拖放檔案進來
+            </div>
+            <div class="font-bold">檔案限制格式：pdf，大小200mb以下</div>
           </div>
-          <div class="font-bold">檔案限制格式：pdf，大小200mb以下</div>
-        </div>
-        <div
-          v-if="step == 2"
-          :class="nextPage == '' ? '' : 'hidden'"
-          class="mt-8 upload_inneer2 border rounded-md border-dashed flex justify-center items-center flex-col"
-        >
-          <p class="text-left file_title">文件命名</p>
-          <input type="text" class="file_name bg-white file_name_input" v-model="filename"/>
+          <div
+            v-if="step == 2"
+            :class="nextPage == '' ? '' : 'hidden'"
+            class="mt-8 upload_inneer2 border rounded-md border-dashed flex justify-center items-center flex-col"
+          >
+            <p class="text-left file_title">文件命名</p>
+            <input type="text" class="file_name bg-white file_name_input" v-model="filename"/>
+          </div>
         </div>
       </div>
-    </div>
-    <div @click="nextStep()" :class="nextPage == ''">下一步</div>
-    <div :class="nextPage == '' ? 'hidden' : ''">
-      <FileReview />
-      <!-- <pdfview /> -->
+      <div @click="nextStep()" :class="nextPage == ''">下一步</div>
+      <div :class="nextPage == '' ? 'hidden' : ''">
+        <FileReview />
+        <!-- <pdfview /> -->
+      </div>
     </div>
   </div>
 </template>
@@ -65,12 +68,14 @@ import FileReview from "../page/FileReview.vue";
 import ProgressLine from "../components/progress.vue";
 import pdfview from '../components/pdfview.vue';
 import jsPDF from "jspdf";
+import Header from '../components/Header.vue';
 var canvas = null
 export default {
   components: {
     FileReview,
     ProgressLine,
-    pdfview
+    pdfview,
+    Header
   },
   data() {
     return {

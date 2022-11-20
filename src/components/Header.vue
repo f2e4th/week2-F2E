@@ -15,7 +15,7 @@
             <img src="../assets/images/Tab_text.png"/>
            </a>
         </div>
-        <a class="nextBtn flex flex-col items-center w-20 py-4 cursor-not-allowed">
+        <a @click="nextStep" class="nextBtn flex flex-col items-center w-20 py-4 cursor-not-allowed">
             <img src="../assets/images/disabled-next.png"/>
         </a>
     </div>
@@ -30,11 +30,14 @@ export default {
     // WarningAlert,
     SelectSign
   },
-  setup (props, ctx) {
+  setup (props, ctx ) {
     const isSelectSign = ref(false)
     const signUrl = ref('')
     const closeWarning = (closeWarning) => {
       isSelectSign.value = closeWarning
+    }
+    const nextStep = function(){
+      ctx.emit('nextStep')
     }
 
   
@@ -52,6 +55,7 @@ export default {
         closeWarning,
         selectedSign,
         signUrl,
+        nextStep
     }
   } 
 }
