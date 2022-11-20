@@ -5,6 +5,7 @@
    <!-- <FileUpload/> -->
     <Header/>
    <router-view />
+   <!-- <FileUpload/> -->
   </div>
 </template>
 
@@ -14,6 +15,7 @@
 // import SignPage  from './page/SignPage.vue';
 // import FileReview from './page/FileReview.vue';
 import Header from './components/Header.vue';
+import FileUpload from './page/FileUpload.vue'
 
 export default {
   components:{
@@ -22,6 +24,7 @@ export default {
     // SignPage,
     // FileReview,
     Header,
+    FileUpload
   }
 }
 </script>
