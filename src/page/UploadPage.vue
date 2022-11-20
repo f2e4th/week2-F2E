@@ -28,9 +28,9 @@
       </div>
 
     </div>
-    <div v-else class="Upload_pdf">
+    <!-- <div v-else class="Upload_pdf">
       <pdfview/>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -39,10 +39,12 @@ import finish from '../assets/img/finish.svg';
 import sign from '../assets/img/sign.svg';
 import upload from '../assets/img/upload.svg';
 import pdfview from '../components/pdfview.vue';
+import fileReview from '../page/FileReview.vue';
 import axios from 'axios';
 export default {
   components: {
-    pdfview
+    pdfview,
+    fileReview
   }
 }
 </script>

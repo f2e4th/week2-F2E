@@ -64,6 +64,7 @@ import bus from "../srcipt/bus";
 import FileReview from "../page/FileReview.vue";
 import ProgressLine from "../components/progress.vue";
 import pdfview from '../components/pdfview.vue';
+import { useRouter, useRoute } from "vue-router";
 
 export default {
   components: {
@@ -109,7 +110,8 @@ export default {
         this.step = 2
     },
     nextStep() {
-      this.nextPage = 1;
+      // this.nextPage = 1;
+      router.push({ name: "FileReview" });
     },
     dragleave(e) {
       console.log("拖出");
