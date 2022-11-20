@@ -53,8 +53,8 @@
     </div>
     <div @click="nextStep()" :class="nextPage == ''">下一步</div>
     <div :class="nextPage == '' ? 'hidden' : ''">
-      <!-- <FileReview /> -->
-      <pdfview />
+      <FileReview />
+      <!-- <pdfview /> -->
     </div>
   </div>
 </template>
@@ -64,7 +64,8 @@ import bus from "../srcipt/bus";
 import FileReview from "../page/FileReview.vue";
 import ProgressLine from "../components/progress.vue";
 import pdfview from '../components/pdfview.vue';
-
+import jsPDF from "jspdf";
+var canvas = null
 export default {
   components: {
     FileReview,
@@ -78,7 +79,8 @@ export default {
       nextPage: "",
       arrStatus: [1, 2, 2],
       // 控制進度條 控制步驟，動態控制 progressData item.status , 0 已經做， 1正在做 ，2還沒做 ,
-      step: 1, // 1 未上傳，2 已上傳
+      step: 1, // 1 未上傳，2 已上傳,
+      pageCount: 1
     };
   },
   methods: {
@@ -96,21 +98,204 @@ export default {
             }
         console.log(this.filename);
         // bus.emit("fileUpload", this.$refs["upload-file"].files[0]);
-        this.store(filedata)
+        this.pdfInit(filedata)
       } else {
         this.step = 1;
       }
     },
-    store(thisFile){
-        var canvas = new fabric.Canvas('canvas')
-        var newImg = canvas.toDataURL(thisFile);
-        localStorage.setItem('file', newImg)
+    pdfInit(file){
+      const Base64Prefix = 'data:application/pdf;base64,'
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js'
+      const readBlob = (blob) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader()
+          reader.addEventListener('load', () => resolve(reader.result))
+          reader.addEventListener('error', reject)
+          reader.readAsDataURL(blob)
+        })
+      }
+      const printPDF = async(pdfData, index) => {
+        pdfData = await readBlob(pdfData)
+        localStorage.setItem("pdfData", JSON.stringify(pdfData))
+        const data = atob(pdfData.substring(Base64Prefix.length))
+        const pdfDoc = await pdfjsLib.getDocument({ data }).promise
+        const pdfPage = await pdfDoc.getPage(index ?? 1)
+        this.pageCount = pdfDoc.numPages
+        // const viewport = pdfPage.getViewport({ scale: window.devicePixelRatio })
+        const viewport = pdfPage.getViewport({ scale: 1 })
+        const canvas = document.createElement('canvas')
+        const context = canvas.getContext('2d')
+        // 控制顯示PDF的寬高
+        canvas.height = viewport.height
+        canvas.width = viewport.width
+        const renderContext = {
+          canvasContext: context,
+          viewport
+        }
+        const renderTask = pdfPage.render(renderContext)
+        // 回傳做好的canvas
+        return renderTask.promise.then(() => canvas)
+      }
+      const pdfToImage = async(pdfData) => {
+        const scale = 1
+        return new fabric.Image(pdfData, {
+          scaleX: scale,
+          scaleY: scale
+        })
+      }
+      canvas = new fabric.Canvas('canvas')
+      const Init = async (index) => {
+        canvas.requestRenderAll()
+        const pdfData = await printPDF(file, index)
+        const pdfImage = await pdfToImage(pdfData)
+        // 調整canvas大小
+        // canvas.setWidth(pdfImage.width / window.devicePixelRatio)
+        // canvas.setHeight(pdfImage.height / window.devicePixelRatio)
+        canvas.setWidth(pdfImage.width)
+        canvas.setHeight(pdfImage.height)
+        canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas))
+      }
+      Init(1)
+      const queueRenderPage = (num) => {
+        if (pageRendering.value) {
+          pageNumPending.value = num
+          console.log(num)
+        } else {
+          renderPage(num)
+        }
+      }
+      const renderPage = async(num) => {
+        console.log(num)
+        pageRendering.value = true
+        const data = atob(JSON.parse(localStorage.getItem('pdfData')).substring(Base64Prefix.length))
+        const pdfDoc = await pdfjsLib.getDocument({ data }).promise
+        pdfDoc.getPage(num.value).then((page) => {
+          var viewport = page.getViewport({scale: scale})
+          canvas.height = viewport.height
+          canvas.width = viewport.width
+          var renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+          }
+          var renderTask = page.render(renderContext)
+          renderTask.promise.then(() =>{
+            pageRendering.value = false
+            if (pageNumPending.value !== null) {
+              reRender(pageNumPending.value)
+              pageNumPending.value = null
+            }
+          })
+        })
+      }
+      // 加入簽名
+      const sign = document.querySelector('.signBtn')
+      if (localStorage.getItem('vue-canvas')) {
+        signUrl.value = localStorage.getItem('vue-canvas')
+      }
+      sign.addEventListener('click', () => {
+        if (!signUrl.value) return
+        fabric.Image.fromURL(signUrl.value, (image) => {
+          image.top = 100
+          image.left = 100
+          image.scaleX = 0.5
+          image.scaleY = 0.5
+          canvas.add(image)
+        })
+      })
+      // 加入日期
+      const dateBtn = document.querySelector('.dateBtn')
+      let day = new Date();
+      const today = day.getFullYear() + '/' + day.getMonth() + '/' + day.getDate();
 
-        this.step = 2
+      dateBtn.addEventListener('click', () => {
+        var text = new fabric.Text(today, (image) => {
+          image.top = 10
+          image.left = 10
+          image.scaleX = 0.5
+          image.scaleY = 0.5
+        })
+        canvas.add(text)
+
+      })
+      // 加入文字
+      const textBtn = document.querySelector('.textBtn')
+      textBtn.addEventListener('click', () => {
+
+          // Swal.fire({
+          //   input: 'textarea',
+          //   inputAttributes: {
+          //     autocapitalize: 'off'
+          //   },
+          //   focusConfirm: false,
+          //   showCancelButton: true,
+          //   confirmButtonText: '確定',
+          //   cancelButtonText: '取消',
+          //   customClass: {
+          //     popup: 'customClass-popup rounded-3xl py-6 w-auto px-5',
+          //     title: 'customClass-title font-bold text-black pt-6 px-0',
+          //     input: 'customClass-input',
+          //     inputLabel: '',
+          //     actions: 'btns',
+          //     confirmButton: 'btn btn-confirm',
+          //     cancelButton: 'btn btn-cancel',
+          //   }
+          // }).then((result) => {
+          //     // const canvas = new fabric.Canvas('canvas')
+          //     var text = new fabric.Text(result.value, (image) => {
+          //       image.top = 10
+          //       image.left = 10
+          //       image.scaleX = 0.5
+          //       image.scaleY = 0.5
+          //     })
+          //     canvas.add(text)
+          // })
+      })
+      // 前一頁
+      const prePage = () => {
+        if (pageNum.value <= 1) {
+          return
+        }
+        pageNum.value--
+        // queueRenderPage(pageNum)
+        Init(pageNum.value)
+      }
+      // document.querySelector('.prePage-btn-top').addEventListener('click', prePage)
+      // document.querySelector('.prePage-btn').addEventListener('click', prePage)
+      // 下一頁
+      // const nextPage = () => {
+      //   if (this.pageNum >= this.pageCount.value) {
+      //     return
+      //   }
+      //   pageNum.value++
+      //   // queueRenderPage(pageNum)
+      //   Init(pageNum.value)
+      // }
+      // document.querySelector('.nextPage-btn-top').addEventListener('click', nextPage)
+      // document.querySelector('.nextPage-btn').addEventListener('click', nextPage)
+      // 下載
+      const pdf = new jsPDF()
+      const download = () => {
+        // 將 canvas 存為圖片
+        const image = canvas.toDataURL("image/png")
+        // 設定背景在 PDF 中的位置及大小
+        const width = pdf.internal.pageSize.width;
+        const height = pdf.internal.pageSize.height
+        pdf.addImage(image, "png", 0, 0, width, height)
+        // 將檔案取名並下載
+        pdf.save("download.pdf")
+      }
+      const finish = async() => {
+        await download()
+      }
+
+      document.querySelector('.downloadBtn').addEventListener('click', () => {
+        console.log('1')
+        finish()
+      })
     },
     nextStep() {
-      // this.nextPage = 1;
-      this.$router.push({ name: "FileReview" }) 
+      this.nextPage = 1;
+      // this.$router.push({ name: "FileReview" }) 
 
     },
     dragleave(e) {
