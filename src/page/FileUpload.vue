@@ -101,11 +101,13 @@ export default {
             } else {
                 this.filename = this.$refs["upload-file"].files[0].name;
                 filedata = this.$refs["upload-file"].files[0]
+                bus.emit("fileUpload", this.$refs["upload-file"].files[0]);
             }
         console.log(this.filename);
-        // bus.emit("fileUpload", this.$refs["upload-file"].files[0]);
+       
         this.pdfInit(filedata)
         this.fileExist = true;
+        this.step = 2;
       } else {
         this.step = 1;
         this.fileExist = true;
