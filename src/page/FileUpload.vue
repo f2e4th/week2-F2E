@@ -85,7 +85,8 @@ export default {
       arrStatus: [1, 2, 2],
       // 控制進度條 控制步驟，動態控制 progressData item.status , 0 已經做， 1正在做 ，2還沒做 ,
       step: 1, // 1 未上傳，2 已上傳,
-      pageCount: 1
+      pageCount: 1,
+      fileExist: false
     };
   },
   methods: {
@@ -104,8 +105,10 @@ export default {
         console.log(this.filename);
         // bus.emit("fileUpload", this.$refs["upload-file"].files[0]);
         this.pdfInit(filedata)
+        this.fileExist = true;
       } else {
         this.step = 1;
+        this.fileExist = true;
       }
     },
     pdfInit(file){
@@ -194,7 +197,7 @@ export default {
       }
     },
     nextStep() {
-      if(window.localStorage.getItem('pdfData')){
+      if(window.localStorage.getItem('pdfData') && this.fileExist){
         this.nextPage = 1;
       } else {
         alert('請先上傳檔案')
