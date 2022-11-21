@@ -1,17 +1,24 @@
 <template>
   <div>
-    <home-page/>
+    <!-- <Header/> -->
+   <!-- <router-view /> -->
+   <FileUpload/>
   </div>
 </template>
 
 <script>
-import homePage from './page/homePage.vue'
+// import Header from './components/Header.vue';
+import FileUpload from './page/FileUpload.vue'
 
 export default {
   components:{
-    homePage
+    // homePage,
+    // UploadPage,
+    // SignPage,
+    // FileReview,
+    // Header,
+    FileUpload
   }
- 
 }
 </script>
 
