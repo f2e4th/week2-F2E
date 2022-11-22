@@ -157,7 +157,9 @@
             </div>
             <div class="card_continer flex flex-nowrap">
               <div v-for="(item, i) in 2" :key="i" class="card my-2 rounded">
-                {{items}}
+                <div class="card_inner">
+
+                </div>
               </div>
             </div>
           </div>
@@ -246,6 +248,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$main_color: #be8e55;
 .draw_modal {
   z-index: 99;
   height: 120vh;
@@ -344,11 +347,18 @@ export default {
 }
 .modal_content.modal_content--upload {
   .card {
+    @apply p-0 flex items-center justify-center;
     width: 260px;
     height: 240px;
     background: #EFE3D4;
     &:nth-child(1){
       margin-right: 20px;
+    }
+    .card_inner {
+      @apply border border-dashed rounded-lg;
+      border-color: $main_color;
+      height: 180px;
+      width: 200px;
     }
   }
 }
