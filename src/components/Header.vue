@@ -45,7 +45,7 @@ export default {
     const prevPage = function(){
       ctx.emit('prevPage')
     }
-
+    canvas = new fabric.Canvas('canvas')
   
     const selectedSign = (selectedSign) => {
       fabric.Image.fromURL(selectedSign, (image) => {
