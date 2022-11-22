@@ -1,6 +1,6 @@
 <template>
    <div class='container_pdf w-screen h-screen relative overflow-x-hidden'>
-    <div class="downloadBtn cursor-pointer">完成</div>
+    <!-- <div class="downloadBtn cursor-pointer">完成</div> -->
     <!-- <SelectSign v-if="isSelectSign" @closeWarning="closeWarning" @selectedSign="selectedSign"  /> -->
     <div class="styledCreate__WrapperRight-sc-1i4fuzv-10 cKAFxH">
       <div id="viewer" tabindex="10" scale="1" class="styled__Wrapper-sc-cpx59f-1 gKmbon overflow-x-hidden">
@@ -18,7 +18,7 @@
 
 <script>
 /* eslint-disable */
-import { onMounted, ref, reactive, watch, toRefs } from 'vue';
+import { onMounted, ref, reactive, watch } from 'vue';
 // import WarningAlert from '@/components/modules/warningAlert_pdf.vue'
 import bus from '../srcipt/bus';
 import jsPDF from "jspdf";
@@ -227,24 +227,24 @@ export default {
       // document.querySelector('.nextPage-btn-top').addEventListener('click', nextPage)
       // document.querySelector('.nextPage-btn').addEventListener('click', nextPage)
       // 下載
-      const pdf = new jsPDF()
-      const download = () => {
-        // 將 canvas 存為圖片
-        const image = canvas.toDataURL("image/png")
-        // 設定背景在 PDF 中的位置及大小
-        const width = pdf.internal.pageSize.width;
-        const height = pdf.internal.pageSize.height
-        pdf.addImage(image, "png", 0, 0, width, height)
-        // 將檔案取名並下載
-        pdf.save("download.pdf")
-      }
-      const finish = async() => {
-            await download()
-      }
-      document.querySelector('.downloadBtn').addEventListener('click', () => {
-        console.log('1')
-        finish()
-      })
+      // const pdf = new jsPDF()
+      // const download = () => {
+      //   // 將 canvas 存為圖片
+      //   const image = canvas.toDataURL("image/png")
+      //   // 設定背景在 PDF 中的位置及大小
+      //   const width = pdf.internal.pageSize.width;
+      //   const height = pdf.internal.pageSize.height
+      //   pdf.addImage(image, "png", 0, 0, width, height)
+      //   // 將檔案取名並下載
+      //   pdf.save("download.pdf")
+      // }
+      // const finish = async() => {
+      //       await download()
+      // }
+      // document.querySelector('.downloadBtn').addEventListener('click', () => {
+      //   console.log('1')
+      //   finish()
+      // })
     }
     const closeWarning = (closeWarning) => {
       isSelectSign.value = closeWarning
@@ -285,8 +285,15 @@ export default {
   },
   watch: {
     'loadTrigger'(newVal){
-      console.log('loadTrigger change:', newVal)
-      // pdfInit.finish()
+        const pdf = new jsPDF()
+        // 將 canvas 存為圖片
+        const image = canvas.toDataURL("image/png")
+        // 設定背景在 PDF 中的位置及大小
+        const width = pdf.internal.pageSize.width;
+        const height = pdf.internal.pageSize.height
+        pdf.addImage(image, "png", 0, 0, width, height)
+        // 將檔案取名並下載
+        pdf.save("download.pdf")
     }
   }
 }
