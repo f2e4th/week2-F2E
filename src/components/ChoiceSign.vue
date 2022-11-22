@@ -154,6 +154,7 @@ export default {
 .draw_modal {
   z-index: 99;
   height: 120vh;
+  background: rgba(140, 93, 25, 0.3)
 }
 .card-inner {
   left: 50%;
