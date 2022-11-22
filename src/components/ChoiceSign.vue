@@ -1,5 +1,5 @@
 <template>
-  <div class="draw_modal w-full left-0 top-0 fixed">
+  <div class="draw_modal w-full left-0 top-0 fixed" @click.self="closeWarning">
     <div class="card-inner absolute text-xl pop-container-choose w-full z-50" v-if="isSelectMode && signStatus != null">
       <div class="relative mt-3" @click="closeWarning">
         <img class="absolute right-0 top-0 mr-4 mt-3" src="../assets/images/icon_Close_Square_n.png" />
@@ -56,15 +56,16 @@
 
     <div class="card-inner absolute text-xl pop-container-choose w-full z-50" v-if="signStatus == null && isSelectMode">
       <div class="bg rounded-3xl overflow-hidden shadow-lg w-full">
-        <div class="px-4 py-6 flex flex-col justify-center w-full">
+        <div class="box_container px-4 py-6 flex flex-col justify-center w-full bg-white relative">
+          <img src="../assets/images/icon_Close_Square_n.svg" class="absolute top-6 right-6 cursor-pointer" @click="closeWarning" alt="">
           <div class="font-bold text-lg mb-8 whitespace-nowrap text-center">目前還沒有簽名喔~</div>
           <div class="text-sm">請創建新的簽名檔，可上傳圖片或線上簽名</div>
-          <a class="flex justify-center mt-4" @click="isSelectMode = false">
-          <img src="../assets/images/add_sign.png"/>
-          </a>
-          <a class="flex justify-center mt-4">
-          <img src="../assets/images/uploadSign.png"/>
-          </a>
+          <div class="btn_text flex justify-center mt-4 rounded cursor-pointer" @click="isSelectMode = false">
+            <img src="../assets/images/icon_add_new_sign_n.svg"/>建立簽名
+          </div>
+          <div class="btn_text flex justify-center mt-4 rounded cursor-pointer">
+          <img src="../assets/images/icon_add_new_img_n.svg"/>上傳簽名圖檔
+          </div>
         </div>
       </div>
   </div>
@@ -127,6 +128,10 @@ export default {
       isSelectMode.value = true;
     }
 
+    const closeModal = () => {
+      
+    }
+
     return {
       // url,
       signArr,
@@ -138,7 +143,8 @@ export default {
       getStroke,
       backToChoose,
       signStatus,
-      getSign
+      getSign,
+      closeModal
     }
   }
 }
@@ -223,5 +229,21 @@ export default {
   @media (max-width: 768px) {
     max-width: 343px;
   }
+}
+.btn_text {
+  @apply flex items-center justify-center;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  height: 34px;
+  width: 280px;
+  background-color: #EFE3D4;
+  margin: 4px auto;
+  >img {
+    margin-right: 5.5px;
+  }
+}
+.box_container {
+  box-shadow: 2px 2px 10px #BE8E55;
 }
 </style>
