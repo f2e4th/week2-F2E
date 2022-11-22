@@ -239,7 +239,6 @@ export default {
         pdf.save("download.pdf")
       }
       const finish = async() => {
-        console.log('props.loadTrigger:', props.loadTrigger)
             await download()
       }
       document.querySelector('.downloadBtn').addEventListener('click', () => {
@@ -284,6 +283,12 @@ export default {
       pageNumPending
     }
   },
+  watch: {
+    'loadTrigger'(newVal){
+      console.log('loadTrigger change:', newVal)
+      // pdfInit.finish()
+    }
+  }
 }
 </script>
 <style lang="scss">

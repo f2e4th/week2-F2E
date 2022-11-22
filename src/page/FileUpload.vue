@@ -55,7 +55,7 @@
       </div>
       <!-- <div @click="nextStep()" :class="nextPage == ''">下一步</div> -->
       <div :class="nextPage == '' ? 'hidden' : ''">
-        <FileReview />
+        <FileReview :loadTrigger="loadTrigger" />
         <!-- <pdfview /> -->
       </div>
     </div>
@@ -86,7 +86,9 @@ export default {
       // 控制進度條 控制步驟，動態控制 progressData item.status , 0 已經做， 1正在做 ，2還沒做 ,
       step: 1, // 1 未上傳，2 已上傳,
       pageCount: 1,
-      fileExist: false
+      fileExist: false,
+      currentStep: 0,
+      loadTrigger: 0
     };
   },
   methods: {
@@ -200,14 +202,23 @@ export default {
     },
     nextStep() {
       if(window.localStorage.getItem('pdfData') && this.fileExist){
-        this.nextPage = 1;
-        this.toStep2();
+        if(this.currentStep == 0){
+          this.nextPage = 1;
+          this.toStep2();
+        } else if (this.currentStep == 1){
+          this.finish();
+        }
       } else {
         alert('請先上傳檔案')
       }
     },
+    finish(){
+      console.log('完成')
+      this.loadTrigger++;
+    },
     toStep2(){
       this.arrStatus = [0, 1, 2];
+      this.currentStep = 1;
     },
     prevPage(){
       console.log('上一頁')
