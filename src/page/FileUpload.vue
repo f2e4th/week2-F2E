@@ -201,10 +201,13 @@ export default {
     nextStep() {
       if(window.localStorage.getItem('pdfData') && this.fileExist){
         this.nextPage = 1;
+        this.toStep2();
       } else {
         alert('請先上傳檔案')
       }
-      // this.$router.push({ name: "FileReview" }) 
+    },
+    toStep2(){
+      this.arrStatus = [0, 1, 2];
     },
     prevPage(){
       console.log('上一頁')
