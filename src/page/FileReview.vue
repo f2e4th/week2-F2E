@@ -18,7 +18,7 @@
 
 <script>
 /* eslint-disable */
-import { onMounted, ref, reactive } from 'vue';
+import { onMounted, ref, reactive, watch, toRefs } from 'vue';
 // import WarningAlert from '@/components/modules/warningAlert_pdf.vue'
 import bus from '../srcipt/bus';
 import jsPDF from "jspdf";
@@ -29,6 +29,9 @@ export default {
   components: {
     // WarningAlert,
     SelectSign
+  },
+  props: {
+    loadTrigger: Number
   },
   setup (props, ctx) {
     const signUrl = ref('')
@@ -236,9 +239,9 @@ export default {
         pdf.save("download.pdf")
       }
       const finish = async() => {
-        await download()
+        console.log('props.loadTrigger:', props.loadTrigger)
+            await download()
       }
-
       document.querySelector('.downloadBtn').addEventListener('click', () => {
         console.log('1')
         finish()
@@ -280,7 +283,7 @@ export default {
       pageRendering,
       pageNumPending
     }
-  }
+  },
 }
 </script>
 <style lang="scss">
